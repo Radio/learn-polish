@@ -1,0 +1,58 @@
+{
+  "name": "learn-polish",
+  "version": "1.0.0",
+  "description": "Helps you learning commonly used phrases and structures in Polish.",
+  "private": true,
+  "dependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "js-yaml": "^3.12.0",
+    "lodash": "^4.17.10",
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "jest": "^23.1.0",
+    "json-loader": "^0.5.7",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "semistandard": "^12.0.1",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "vue-loader": "^15.2.4",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2",
+    "yaml-loader": "^0.5.0"
+  },
+  "scripts": {
+    "watch": "webpack --config webpack.dev.js --watch",
+    "test": "semistandard && jest",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Radio/learn-polish.git"
+  },
+  "keywords": [
+    "polish",
+    "language",
+    "learning"
+  ],
+  "author": "Max Hopei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Radio/learn-polish/issues"
+  },
+  "homepage": "https://github.com/Radio/learn-polish#readme",
+  "semistandard": {
+    "ignore": [
+      "/public/"
+    ]
+  }
+}
