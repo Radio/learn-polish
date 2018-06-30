@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from './Main.vue';
+import App from './ui/Main.vue';
 
 const container = document.createElement('div');
 document.body.appendChild(container);

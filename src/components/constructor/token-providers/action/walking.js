@@ -1,4 +1,5 @@
-import Token from '../../../language/token';
+'use strict';
+
 import sample from 'lodash/sample';
 
 export default class When {
@@ -6,14 +7,17 @@ export default class When {
     this.tokens = tokens;
   }
 
+  /**
+   * Get random <action/walking> token.
+   * @param {{tense: String, subject: String}} reqs
+   * @returns {Object}
+   */
   get (reqs) {
-    const actions = this.tokens.get('tokens.action.walking');
-    const tense = reqs.tense || sample(Object.keys(actions));
-    const gender = reqs.gender || sample(Object.keys(actions[reqs.tense]));
+    const tense = reqs.tense || sample(this.tokens.tenses());
+    const subject = reqs.subject || sample(this.tokens.subjects());
+    const newReqs = Object.assign({ tense, subject }, reqs);
+    const actions = this.tokens.get('action/walking', newReqs);
 
-    return new Token(
-      sample(actions[reqs.tense][reqs.gender]),
-      Object.assign({ tense, gender }, reqs)
-    );
+    return sample(actions);
   }
 }

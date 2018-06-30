@@ -1,18 +1,21 @@
 import Pattern from '../components/constructor/pattern';
-import When from '../components/constructor/token-providers/when';
-import Who from '../components/constructor/token-providers/who';
+import Time from '../components/constructor/token-providers/time';
+import Person from '../components/constructor/token-providers/person';
 import Walking from '../components/constructor/token-providers/action/walking';
+import Place from '../components/constructor/token-providers/place';
 
 export default function (tokens) {
-  let when = new When(tokens);
-  let who = new Who(tokens);
-  let walking = new Walking(tokens);
+  const time = new Time(tokens);
+  const person = new Person(tokens);
+  const walking = new Walking(tokens);
+  const place = new Place(tokens);
 
   // todo: add where
 
   return new Pattern([
-    reqs => when.get(reqs),
-    reqs => who.get(reqs),
-    reqs => walking.get(reqs)
+    reqs => time.get(reqs),
+    reqs => person.get(reqs),
+    reqs => walking.get(reqs),
+    reqs => place.get(reqs)
   ]);
 }

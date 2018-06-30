@@ -1,3 +1,6 @@
+'use strict';
+
+import merge from 'lodash/merge';
 import Phrase from '../language/phrase';
 
 export default class Pattern {
@@ -13,8 +16,16 @@ export default class Pattern {
    * @returns {Phrase}
    */
   compile (reqs) {
-    const tokens = this.tokenProviders.reduce((tokens, provide) => {
-      tokens.unshift(provide(tokens[0] ? tokens[0].reqs : reqs));
+    let phraseReqs = Object.assign({}, reqs);
+    let tokens = this.tokenProviders.reduce((tokens, provide) => {
+      if (tokens[0]) {
+        merge(phraseReqs, tokens[0].requires());
+      }
+      const token = provide(phraseReqs);
+      if (token) {
+        tokens.unshift(token);
+      }
+
       return tokens;
     }, []);
 

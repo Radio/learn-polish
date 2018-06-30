@@ -1,0 +1,33 @@
+tenses:
+  - past    # przeszly      прошлое
+  - present # terażniejszy  настоящее
+  - future  # przyszly      будущее
+
+cases:
+  - nominative   # mianownik    именительный  кто, что?
+  - genitive     # dopełniacz   родительный   кого, чего?
+  - dative       # celownik     дательный     кому, чему?
+  - accusative   # biernik      винительный   кого, что?
+  - instrumental # narzędnik    творительный  кем, чем?
+  - locative     # miejscownik  местный       на ком, на чем?
+
+subjects:
+  - i       # ja
+  - you     # ty
+  - he      # on
+  - she     # ona
+  - it      # ono
+  - we/f    # my (n.m.o)
+  - we/m    # my (m.o)
+  - you/f   # wy (n.m.o)
+  - you/m   # wy (m.o)
+  - they/f  # one (n.m.o)
+  - they/m  # oni (m.o)
+
+prepositions:
+  - place
+  - inside
+  - from-inside
+  - close-to
+  - up-to
+  - from-outside
