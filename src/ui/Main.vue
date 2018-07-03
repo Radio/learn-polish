@@ -13,6 +13,16 @@ import csv from '../etc/tokens.csv';
 import CsvTokens from '../components/config/csv-tokens';
 import createPattern from '../patterns/when-who-walking-where'
 
+let voices, polishVoice;
+let synth = window.speechSynthesis;
+function loadVoices() {
+  voices = synth.getVoices();
+  polishVoice = voices.filter(voice => voice.lang === 'pl-PL')[0];
+}
+
+synth.onvoiceschanged = loadVoices;
+loadVoices();
+
 export default {
   data () {
     return {
@@ -42,6 +52,15 @@ export default {
     answer () {
       this.showTranslation = true;
     },
+    speak () {
+      if (polishVoice) {
+        let utterThis = new SpeechSynthesisUtterance(this.phrase.translate().stringify());
+        utterThis.voice = polishVoice;
+        utterThis.pitch = 0.9;
+        utterThis.rate = 0.9;
+        synth.speak(utterThis);
+      }
+    },
     asnwered () {
       return this.showTranslation;
     },
@@ -57,6 +76,7 @@ export default {
     const nextStep = () => {
       if (!this.asnwered()) {
         this.answer();
+        this.speak();
         return;
       }
 
@@ -69,9 +89,21 @@ export default {
         nextStep();
       }
     });
-    window.addEventListener('click', event => {
-      event.preventDefault();
-      nextStep();
+    window.addEventListener('click', () => nextStep());
+
+    let touchMoved = false;
+    let touchStartedAt = false;
+    window.addEventListener('touchstart', () => {
+      touchMoved = false;
+      touchStartedAt = Date.now();
+    });
+    window.addEventListener('touchmove', () => {
+      touchMoved = true;
+    });
+    window.addEventListener('touchend', () => {
+      if (!touchMoved && Date.now() - touchStartedAt < 400) {
+        nextStep();
+      }
     });
   },
   components: { Phrase }
@@ -88,15 +120,34 @@ body, window {
   width: 100%;
   height: 100%;
 }
-
-.phrase {
-  margin: 15% auto 0;
-  text-align: center;
-  font-size: 3em
-}
+.phrase,
 .translation {
-  margin: 10% auto 0;
+  position: relative;
+  margin: 0 1em;
   text-align: center;
   font-size: 3em
 }
+
+
+@media screen and (orientation:portrait) {
+  .phrase {
+    top: 15%;
+    font-size: 6em;
+  }
+  .translation {
+    top: 30%;
+    font-size: 6em;
+  }
+}
+@media screen and (orientation:landscape) {
+  .phrase {
+    top: 25%;
+  }
+  .translation {
+    top: 45%;
+  }
+}
+
+
+
 </style>

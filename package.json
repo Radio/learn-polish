@@ -33,9 +33,9 @@
   "scripts": {
     "watch": "webpack --config webpack.dev.js --watch",
     "test": "semistandard && jest",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "webpack-dev-server --host 0.0.0.0 --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "deploy": "cp public/* ../blog/radio.github.io/learn-polish/ && git add . && git commit -am 'Update learn-polish' && git push"
+    "deploy": "cd ../blog/radio.github.io/ && cp ../../learn-polish/public/* learn-polish && git add . && git commit -am 'Update learn-polish' && git push"
   },
   "repository": {
     "type": "git",
