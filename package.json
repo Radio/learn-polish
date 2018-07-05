@@ -15,8 +15,8 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "eslint-plugin-html": "^4.0.5",
     "file-loader": "^1.1.11",
-    "jest": "^23.1.0",
     "json-loader": "^0.5.7",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
@@ -32,10 +32,9 @@
   },
   "scripts": {
     "watch": "webpack --config webpack.dev.js --watch",
-    "test": "semistandard && jest",
+    "test": "semistandard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --host 0.0.0.0 --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "deploy": "cd ../blog/radio.github.io/ && cp ../../learn-polish/public/* learn-polish && git add . && git commit -am 'Update learn-polish' && git push"
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -51,7 +50,7 @@
   "bugs": {
     "url": "https://github.com/Radio/learn-polish/issues"
   },
-  "homepage": "https://github.com/Radio/learn-polish#readme",
+  "homepage": "https://radio.github.io/learn-polish",
   "semistandard": {
     "ignore": [
       "/public/"

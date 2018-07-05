@@ -41,7 +41,10 @@ module.exports = {
       loader: 'json-loader'
     }, {
       test: /\.yaml$/,
-      loader: 'yaml-loader'
+      use: [
+        'json-loader',
+        'yaml-loader'
+      ]
     }, {
       test: /\.csv$/,
       loader: 'csv-loader',

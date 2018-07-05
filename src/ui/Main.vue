@@ -6,22 +6,14 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import Phrase from './Phrase.vue';
-import languageConfig from 'json-loader!../etc/lang.yaml';
+import languageConfig from '../etc/lang.yaml';
 import csv from '../etc/tokens.csv';
 import CsvTokens from '../components/config/csv-tokens';
-import createPattern from '../patterns/when-who-walking-where'
+import createPattern from '../patterns/when-who-walking-where';
+import Synthesis from '../components/speech/synthesis';
 
-let voices, polishVoice;
-let synth = window.speechSynthesis;
-function loadVoices() {
-  voices = synth.getVoices();
-  polishVoice = voices.filter(voice => voice.lang === 'pl-PL')[0];
-}
-
-synth.onvoiceschanged = loadVoices;
-loadVoices();
+let synth = new Synthesis();
 
 export default {
   data () {
@@ -35,17 +27,21 @@ export default {
       phrase: null,
       showTranslation: false,
       backgroundColor: '#fff'
-    }
+    };
+  },
+  created () {
+    this.recreateTokens();
+    this.next();
   },
   methods: {
     next () {
-      this.recreateTokens();
       this.changeColor();
       this.showTranslation = false;
       this.phrase = createPattern(this.tokens).compile(this.reqs);
     },
     changeColor () {
-      this.backgroundColor = "hsl(" + 360 * Math.random() + ',' +
+      // generate some pastel color
+      this.backgroundColor = 'hsl(' + 360 * Math.random() + ',' +
                  (25 + 70 * Math.random()) + '%,' +
                  (85 + 10 * Math.random()) + '%)';
     },
@@ -53,13 +49,7 @@ export default {
       this.showTranslation = true;
     },
     speak () {
-      if (polishVoice) {
-        let utterThis = new SpeechSynthesisUtterance(this.phrase.translate().stringify());
-        utterThis.voice = polishVoice;
-        utterThis.pitch = 0.9;
-        utterThis.rate = 0.9;
-        synth.speak(utterThis);
-      }
+      synth.sayInPolish(this.phrase.translate().stringify());
     },
     asnwered () {
       return this.showTranslation;
@@ -67,10 +57,6 @@ export default {
     recreateTokens () {
       this.tokens = new CsvTokens(csv, languageConfig, this.fromLanguage, this.toLanguage);
     }
-  },
-  created () {
-    this.recreateTokens();
-    this.next();
   },
   mounted () {
     const nextStep = () => {
@@ -81,7 +67,7 @@ export default {
       }
 
       this.next();
-    }
+    };
 
     window.addEventListener('keydown', event => {
       if (event.key === ' ' || event.key === 'Enter' || event.key === 'ArrowRight') {
@@ -128,7 +114,6 @@ body, window {
   font-size: 3em
 }
 
-
 @media screen and (orientation:portrait) {
   .phrase {
     top: 15%;
@@ -147,7 +132,4 @@ body, window {
     top: 45%;
   }
 }
-
-
-
 </style>
