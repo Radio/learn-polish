@@ -2,6 +2,11 @@
   <div class="container" v-bind:style="{'background-color': backgroundColor}">
     <p class="phrase"><phrase v-bind:phrase="phrase"></phrase></p>
     <p class="translation" v-if="showTranslation"><phrase v-bind:phrase="phrase.translate()"></phrase></p>
+    <div class="actions">
+      <div href="#" class="action speaker-switch"
+        v-bind:class="{'on': !silent, 'off': silent}"
+        v-on:click.prevent.stop="silent = !silent">{{ silent ? 'включить звук' : 'выключить звук' }}</div>
+    </div>
   </div>
 </template>
 
@@ -26,7 +31,8 @@ export default {
       toLanguage: 'polish',
       phrase: null,
       showTranslation: false,
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      silent: false
     };
   },
   created () {
@@ -51,6 +57,9 @@ export default {
     speak () {
       synth.sayInPolish(this.phrase.translate().stringify());
     },
+    maySpeak () {
+      return !this.silent;
+    },
     asnwered () {
       return this.showTranslation;
     },
@@ -60,13 +69,15 @@ export default {
   },
   mounted () {
     const nextStep = () => {
-      if (!this.asnwered()) {
-        this.answer();
-        this.speak();
-        return;
+      if (this.asnwered()) {
+        return this.next();
       }
 
-      this.next();
+      this.answer();
+
+      if (this.maySpeak()) {
+        this.speak();
+      }
     };
 
     window.addEventListener('keydown', event => {
@@ -86,7 +97,10 @@ export default {
     window.addEventListener('touchmove', () => {
       touchMoved = true;
     });
-    window.addEventListener('touchend', () => {
+    window.addEventListener('touchend', (event) => {
+      if (event.target.className.indexOf('action') >= 0) {
+        return;
+      }
       if (!touchMoved && Date.now() - touchStartedAt < 400) {
         nextStep();
       }
@@ -114,6 +128,23 @@ body, window {
   font-size: 3em
 }
 
+.actions {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  .action {
+    cursor: pointer;
+    text-decoration: underline;
+    display: block;
+    padding: 1em 1.2em;
+    box-sizing: border-box;
+    float: right;
+    font-size: 1.3em;
+  }
+}
+
+
 @media screen and (orientation:portrait) {
   .phrase {
     top: 15%;
@@ -122,6 +153,11 @@ body, window {
   .translation {
     top: 30%;
     font-size: 6em;
+  }
+  .actions {
+    .action {
+      font-size: 3em;
+    }
   }
 }
 @media screen and (orientation:landscape) {
