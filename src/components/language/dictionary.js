@@ -4,19 +4,18 @@ import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 import Token from '../language/token';
 
-export default class CsvTokens {
-  /**
-   * @param {Object} configDocument
-   */
-  constructor (rows, grammar, fromLanguage = 'russian', toLanguage = 'polish') {
-    this.tokens = rows
+const knownLanguages = ['russian', 'polish'];
+
+export default class Dictionary {
+  constructor (tokens, grammar, fromLanguage = 'russian', toLanguage = 'polish') {
+    this.tokens = tokens
       .filter(row => !!row[fromLanguage])
       .map(row => {
         return new Token(
           row[fromLanguage],
           row[toLanguage],
           row.type,
-          pickBy(omit(row, ['russian', 'polish', 'type']))
+          pickBy(omit(row, ['type', ...knownLanguages]))
         );
       });
     this.grammar = grammar;
@@ -36,5 +35,9 @@ export default class CsvTokens {
 
   prepositions () {
     return this.grammar.prepositions;
+  }
+
+  aspects () {
+    return this.grammar.aspects;
   }
 }

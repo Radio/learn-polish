@@ -4,7 +4,9 @@
   "description": "Helps you learning commonly used phrases and structures in Polish.",
   "private": true,
   "dependencies": {
+    "async": "^2.6.1",
     "csv-loader": "^2.1.1",
+    "googleapis": "^27.0.0",
     "html-webpack-plugin": "^3.2.0",
     "js-yaml": "^3.12.0",
     "lodash": "^4.17.10",
@@ -34,7 +36,8 @@
     "watch": "webpack --config webpack.dev.js --watch",
     "test": "semistandard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --host 0.0.0.0 --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "fetch-tokens": "nodejs bin/fetch-tokens-from-google-sheets.js"
   },
   "repository": {
     "type": "git",

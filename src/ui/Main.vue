@@ -7,9 +7,9 @@
 
 <script>
 import Phrase from './Phrase.vue';
-import languageConfig from '../etc/lang.yaml';
-import csv from '../etc/tokens.csv';
-import CsvTokens from '../components/config/csv-tokens';
+import tokens from '../etc/tokens-from-google-sheets'; // '../etc/tokens-from-local-csvs'
+import grammar from '../etc/grammar.yaml';
+import Dictionary from '../components/language/dictionary';
 import createPattern from '../patterns/when-who-walking-where';
 import Synthesis from '../components/speech/synthesis';
 
@@ -18,7 +18,7 @@ let synth = new Synthesis();
 export default {
   data () {
     return {
-      tokens: null,
+      dictionary: null,
       reqs: {
         tense: 'past'
       },
@@ -30,14 +30,14 @@ export default {
     };
   },
   created () {
-    this.recreateTokens();
+    this.recreateDictionary();
     this.next();
   },
   methods: {
     next () {
       this.changeColor();
       this.showTranslation = false;
-      this.phrase = createPattern(this.tokens).compile(this.reqs);
+      this.phrase = createPattern(this.dictionary).compile(this.reqs);
     },
     changeColor () {
       // generate some pastel color
@@ -54,8 +54,8 @@ export default {
     asnwered () {
       return this.showTranslation;
     },
-    recreateTokens () {
-      this.tokens = new CsvTokens(csv, languageConfig, this.fromLanguage, this.toLanguage);
+    recreateDictionary () {
+      this.dictionary = new Dictionary(tokens, grammar, this.fromLanguage, this.toLanguage);
     }
   },
   mounted () {

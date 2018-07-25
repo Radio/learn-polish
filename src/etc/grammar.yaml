@@ -25,9 +25,13 @@ subjects:
   - they/m  # oni (m.o)
 
 prepositions:
-  - place
-  - inside
-  - from-inside
-  - close-to
-  - up-to
-  - from-outside
+  - place         # магазин, школу (винительный)
+  - inside        # в магазин, в школу
+  - from-inside   # из магазина, со школы
+  - close-to      # к магазину, к школе
+  - up-to         # до магазина, до школы
+  - from-outside  # от магазина, от школы
+
+aspects:
+  - perfective    # dokonany
+  - imperfective  # niedokonany

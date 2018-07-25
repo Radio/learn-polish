@@ -37,9 +37,6 @@ module.exports = {
       test: /\.vue$/,
       loader: 'vue-loader'
     }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }, {
       test: /\.yaml$/,
       use: [
         'json-loader',

@@ -1,0 +1,33 @@
+russian,polish,type,tense
+
+вчера,wczoraj,time,past
+позавчера,przedwczoraj,time,past
+два часа назад,dwie godziny temu,time,past
+утром,rano,time,past
+вечером,wieczorem,time,past
+днем,po południu,time,past
+до обеда,przed południem,time,past
+после обеда,po południu,time,past
+только что,dopiero co,time,past
+на прошлой неделе,w zeszłym tygodniu,time,past
+в прошлом месяце,w zeszłym miesiącu,time,past
+на прошлых выходных,w zeszły weekend,time,past
+однажды,kiedyś,time,past
+
+сегодня,dzisiaj,time,present
+сейчас,teraz,time,present
+в эту минуту,obecnie,time,present
+обычно,zwykle,time,present
+
+завтра,jutro,time,future
+послезавтра,pojutrze,time,future
+после обеда,po południu,time,future
+на следующей неделе,w następnym tygodniu,time,future
+в шесть часов вечера,o szóstej wieczorem,time,future
+вечером,wieczorem,time,future
+завтра утром,jutro rano,time,future
+после работы,po prace,time,future
+в следующем месяце,w następnym miesiącu,time,future
+на выходных,w weekendy,time,future
+на следующих выходных,w następne weekendy,time,future
+однажды,kiedyś,time,future
