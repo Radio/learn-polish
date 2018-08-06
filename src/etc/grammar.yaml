@@ -12,8 +12,10 @@ cases:
   - locative     # miejscownik  местный       на ком, на чем?
 
 subjects:
-  - i       # ja
-  - you     # ty
+  - i/m     # ja (m)
+  - i/f     # ja (ż)
+  - you/s/m # ty (m)
+  - you/s/f # ty (ż)
   - he      # on
   - she     # ona
   - it      # ono
