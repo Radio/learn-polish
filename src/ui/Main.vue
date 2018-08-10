@@ -24,9 +24,7 @@ export default {
   data () {
     return {
       dictionary: null,
-      reqs: {
-        tense: 'past'
-      },
+      reqs: {},
       fromLanguage: 'russian',
       toLanguage: 'polish',
       phrase: null,
@@ -80,31 +78,53 @@ export default {
       }
     };
 
-    window.addEventListener('keydown', event => {
-      if (event.key === ' ' || event.key === 'Enter' || event.key === 'ArrowRight') {
-        event.preventDefault();
-        nextStep();
-      }
-    });
-    window.addEventListener('click', () => nextStep());
+    handleKeyboard();
+    handleMouse();
+    handleTouches();
 
-    let touchMoved = false;
-    let touchStartedAt = false;
-    window.addEventListener('touchstart', () => {
-      touchMoved = false;
-      touchStartedAt = Date.now();
-    });
-    window.addEventListener('touchmove', () => {
-      touchMoved = true;
-    });
-    window.addEventListener('touchend', (event) => {
-      if (event.target.className.indexOf('action') >= 0) {
-        return;
-      }
-      if (!touchMoved && Date.now() - touchStartedAt < 400) {
-        nextStep();
-      }
-    });
+    function handleKeyboard () {
+      window.addEventListener('keydown', event => {
+        if (event.key === ' ' || event.key === 'Enter' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          nextStep();
+        }
+      });
+    }
+
+    function handleMouse () {
+      let dragging = false;
+      window.addEventListener('mousedown', () => {
+        dragging = false;
+      });
+      window.addEventListener('mousemove', () => {
+        dragging = true;
+      });
+      window.addEventListener('click', () => {
+        if (!dragging) {
+          nextStep();
+        }
+      });
+    }
+
+    function handleTouches () {
+      let touchMoved = false;
+      let touchStartedAt = 0;
+      window.addEventListener('touchstart', () => {
+        touchMoved = false;
+        touchStartedAt = Date.now();
+      });
+      window.addEventListener('touchmove', () => {
+        touchMoved = true;
+      });
+      window.addEventListener('touchend', (event) => {
+        if (event.target.className.indexOf('action') >= 0) {
+          return;
+        }
+        if (!touchMoved && Date.now() - touchStartedAt < 400) {
+          nextStep();
+        }
+      });
+    }
   },
   components: { Phrase }
 };
